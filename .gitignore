@@ -1,0 +1,32 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+.vscode/
+.agent/
+coverage/
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+src/views/perm.vue
+
+# Local env files
+.aks.env
+.aks.stg.env
+.env
+.env.*
+!.env.example
+.aks.env
+.aks.stg.env

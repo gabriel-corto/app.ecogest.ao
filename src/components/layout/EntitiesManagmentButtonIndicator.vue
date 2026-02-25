@@ -1,0 +1,29 @@
+<template>
+  <div class="relative">
+    <UButton
+      size="xl"
+      variant="ghost"
+      class="cursor-pointer"
+      icon="i-hugeicons-user-list"
+      to="/admin/entities"
+    />
+
+    <span
+      class="absolute top-1 right-0 z-10 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white"
+    >
+      {{ response?.data.length || 0 }}
+    </span>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { adminService } from '~/services'
+
+const { data: response } = await useLazyAsyncData(
+  'all-company-entities',
+  () => adminService.getAllCompanyEntities(),
+  {
+    server: false,
+  },
+)
+</script>
