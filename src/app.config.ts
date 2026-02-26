@@ -53,7 +53,22 @@ export default defineAppConfig({
       variants: {
         size: {
           normal: {
-            base: 'h-12 pl-11 rounded-xl font-medium',
+            base: 'h-12 pl-11 rounded-lg  font-medium',
+            leading: 'ps-4',
+            trailing: 'pe-4',
+            leadingIcon: 'size-5',
+            leadingAvatarSize: 'xs',
+            trailingIcon: 'size-4',
+            item: 'p-3 cursor-pointer',
+          },
+        },
+      },
+    },
+    selectMenu: {
+      variants: {
+        size: {
+          normal: {
+            base: 'h-12 pl-11 rounded-lg  font-medium',
             leading: 'ps-4',
             trailing: 'pe-4',
             leadingIcon: 'size-5',
@@ -79,7 +94,7 @@ export default defineAppConfig({
     },
     modal: {
       slots: {
-        overlay: 'bg-black/30 backdrop-blur-sm',
+        overlay: 'bg-black/20 backdrop-blur-xs',
       },
     },
     fileUpload: {

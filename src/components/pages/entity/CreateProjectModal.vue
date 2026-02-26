@@ -30,7 +30,7 @@
               v-model="state.name"
               size="normal"
               class="w-full"
-              icon="i-hugeicons-file-01"
+              icon="i-hugeicons-apartment"
               placeholder="Ex: Construção de Edifício Comercial"
             />
           </UFormField>
@@ -40,26 +40,16 @@
             name="sector"
             label="Sector de Actividade"
           >
-            <USelect
-              v-model="model"
-              label-key="label"
-              value-key="value"
-              :items="sectorItems"
-              name="sector"
-              class="w-full"
-              size="normal"
-              icon="i-hugeicons-work"
-              placeholder="Selecione o sector"
-            />
+            <SelectSectorInput v-model="sector" />
           </UFormField>
 
           <UFormField
             required
-            name="locale"
+            name="location"
             label="Localização"
           >
             <UInput
-              v-model="state.locale"
+              v-model="state.location"
               size="normal"
               class="w-full"
               icon="i-hugeicons-location-01"
@@ -91,10 +81,9 @@
           </UButton>
           <UButton
             :loading="submitting"
-            loading-icon="i-hugeicons-loading-02"
+            loading-icon="i-hugeicons-loading-03"
             size="default"
-            icon="i-hugeicons-arrow-right-02"
-            trailing
+            icon="i-hugeicons-arrow-up-right-01"
             type="submit"
             class="w-full"
           >
@@ -107,48 +96,55 @@
 </template>
 
 <script setup lang="ts">
-import { sectorItems } from '~/data/sectors'
 import * as zod from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import { projectsService } from '~/services'
 import type { SectorItem } from '~/types/schemas'
+import SelectSectorInput from './SelectSectorInput.vue'
 
 const schema = zod.object({
   name: zod.string().min(4, 'Adciona um nome válido para este projecto'),
-  sector: zod.enum(['AGRICULTURE', 'BUILDING', 'EDUCATION', 'ENGINEERING']),
-  locale: zod.string().min(4, 'Adcione uma localização válida'),
+  location: zod.string().min(4, 'Adcione uma localização válida'),
 })
 type Schema = zod.infer<typeof schema>
 
 const state = reactive<Schema>({
   name: '',
-  locale: '',
-  sector: 'AGRICULTURE',
+  location: '',
 })
 
 const submitting = ref(false)
 const emit = defineEmits(['close'])
-const model = defineModel<SectorItem | undefined>()
+
+const sector = ref<SectorItem | undefined>()
 
 const onSubmit = async (event: FormSubmitEvent<Schema>) => {
-  const { name, locale, sector } = event.data
+  const { name, location } = event.data
+
+  if (!sector.value) {
+    useErrorToast({ title: 'Selecione um sector!' })
+    return
+  }
+
   try {
     submitting.value = true
-    const response = await projectsService.create({
+    const response = await projectsService.createProject({
       name,
-      sector,
-      locale,
+      sector: sector.value,
+      location,
     })
 
     useSuccessToast({
       title: response.message,
     })
-
     emit('close', response.data)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    console.log(error.data)
-    useErrorToast(error.data.message[0] || 'Erro ao cadastrar projecto')
+    useErrorToast(
+      error?.data?.message[0] ||
+        error?.data?.message ||
+        'Erro ao cadastrar projecto',
+    )
   } finally {
     submitting.value = false
   }

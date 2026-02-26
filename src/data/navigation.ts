@@ -18,21 +18,10 @@ export const navigationItems = ref<SidebarItems[]>([
   },
   {
     activeClass: 'bg-primary-50',
-    label: 'Gestão de Projectos',
-    defaultOpen: true,
-    icon: 'i-hugeicons-align-bottom',
     context: ['COMPANY'],
-    children: [
-      {
-        label: 'Meus Projectos',
-        icon: 'i-hugeicons-apartment',
-        to: '/entities/projects',
-      },
-      {
-        label: 'Cadastrar Projectos',
-        icon: 'i-hugeicons-add-invoice',
-      },
-    ],
+    label: 'Meus Projectos',
+    icon: 'i-hugeicons-apartment',
+    to: '/entities/projects',
   },
   {
     activeClass: 'bg-primary-50',

@@ -5,9 +5,10 @@ export type StatusEnum =
   | 'REJECTED'
   | 'ACTIVE'
   | 'BLOCKED'
+  | 'INACTIVE'
 
 export type SectorEnum =
-  | 'BUILDING'
+  | 'INDUSTRIAL'
   | 'AGRICULTURE'
   | 'ENGINEERING'
   | 'EDUCATION'

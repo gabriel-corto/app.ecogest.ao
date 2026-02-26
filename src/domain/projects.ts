@@ -1,4 +1,4 @@
-import CreateProjectModal from '~/components/pages/entity/modals/CreateProjectModal.vue'
+import CreateProjectModal from '~/components/pages/entity/CreateProjectModal.vue'
 import type { Project } from '~/types/schemas'
 
 export const useCreateProjectModal = async () => {

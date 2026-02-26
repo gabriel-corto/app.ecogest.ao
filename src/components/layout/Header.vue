@@ -67,7 +67,6 @@
 <script setup lang="ts">
 import AccountMenuDropdown from './AccountMenuDropdown.vue'
 import EntitiesManagmentButtonIndicator from './EntitiesManagmentButtonIndicator.vue'
-import NotificationsButtonIndicator from './NotificationsButtonIndicator.vue'
 import PendingLicencesButtonIndicator from './PendingLicencesButtonIndicator.vue'
 import ProcessesButtonIdicator from './ProcessesButtonIdicator.vue'
 import ProjectsButtonIndicator from './ProjectsButtonIndicator.vue'

@@ -1,3 +1,5 @@
+import type { SectorEnum } from './enums'
+
 export interface CreateNewEntityBody {
   nif: string
   name: string
@@ -12,6 +14,6 @@ export interface LoginBody {
 
 export interface CreateProjectBody {
   name: string
-  sector: string
-  locale: string
+  sector: SectorEnum
+  location: string
 }

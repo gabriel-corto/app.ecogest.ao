@@ -1,8 +1,9 @@
 import type { MaybeRef } from 'vue'
-import type { Role, StatusEnum } from '~/types/enums'
+import type { Role, SectorEnum, StatusEnum } from '~/types/enums'
 
 type RoleColor = 'primary' | 'secondary' | 'neutral'
 type StatusColor = 'primary' | 'secondary' | 'success' | 'error' | 'neutral'
+type SectorColor = 'primary' | 'secondary' | 'success' | 'error' | 'neutral'
 
 const ROLE_COLOR_MAP: Record<Role, RoleColor> = {
   ADMIN: 'primary',
@@ -15,6 +16,24 @@ const STATUS_COLOR_MAP: Record<StatusEnum, StatusColor> = {
   REJECTED: 'error',
   ACTIVE: 'success',
   BLOCKED: 'error',
+  INACTIVE: 'error',
+}
+
+const SECTOR_COLOR_MAP: Record<SectorEnum, SectorColor> = {
+  AGRICULTURE: 'neutral',
+  EDUCATION: 'secondary',
+  ENGINEERING: 'neutral',
+  INDUSTRIAL: 'secondary',
+}
+
+export function sectorColors(sector: MaybeRef<SectorEnum | undefined>) {
+  const sectorColor = computed<SectorColor>(() => {
+    const value = toValue(sector)
+    if (!value) return 'primary'
+    return SECTOR_COLOR_MAP[value]
+  })
+
+  return { sectorColor }
 }
 
 export function roleColors(role: MaybeRef<Role | undefined>) {

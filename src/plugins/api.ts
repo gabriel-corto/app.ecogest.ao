@@ -2,6 +2,7 @@ export default defineNuxtPlugin(() => {
   const api = $fetch.create({
     baseURL: '/api-backend',
     credentials: 'include',
+
     onRequest({ options }) {
       const authStore = useAuthStore()
       if (authStore.accessToken) {

@@ -1,25 +1,17 @@
-import type { ApiNoContent, ApiResponse, PaginationResponse } from '@/types/api'
+import type { ApiPageDataResponse, ApiResponse } from '@/types/api'
 import type { Project } from '@/types/schemas'
 import type { CreateProjectBody } from '~/types/forms'
 
-const PREFIX = '/entities/projects'
+const PREFIX = '/projects'
 
-export const getProjects = async () => {
-  const api = useApiClient()
-
-  const response = await api<PaginationResponse<Project>>(`${PREFIX}`, {
-    method: 'GET',
-    credentials: 'include',
-  })
-
-  return response.data
+export interface QueryParams {
+  query?: string
 }
 
-export const create = async (body: CreateProjectBody) => {
+export const createProject = async (body: CreateProjectBody) => {
   const api = useApiClient()
-  await new Promise(r => setTimeout(r, 2000))
 
-  const response = await api<ApiResponse<Project>>(`${PREFIX}`, {
+  const response = await api<ApiResponse<Project>>(`${PREFIX}/create`, {
     method: 'POST',
     credentials: 'include',
     body,
@@ -28,10 +20,48 @@ export const create = async (body: CreateProjectBody) => {
   return response
 }
 
+export const getAllByEntity = async (params?: QueryParams) => {
+  const api = useApiClient()
+
+  const response = await api<ApiPageDataResponse<Project>>(
+    `${PREFIX}/get-by-entity`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      query: {
+        ...params,
+      },
+    },
+  )
+
+  return response
+}
+
+export const activateProject = async (id: string) => {
+  const api = useApiClient()
+
+  const response = await api<ApiResponse<Project>>(`${PREFIX}/activate/${id}`, {
+    method: 'PATCH',
+    credentials: 'include',
+  })
+
+  return response.data
+}
+
+export const inactiveProject = async (id: string) => {
+  const api = useApiClient()
+
+  const response = await api<ApiResponse<Project>>(`${PREFIX}/inactive/${id}`, {
+    method: 'PATCH',
+    credentials: 'include',
+  })
+
+  return response.data
+}
 export const deleteProject = async (id: string) => {
   const api = useApiClient()
 
-  const response = await api<ApiNoContent>(`${PREFIX}/${id}`, {
+  const response = await api<ApiResponse>(`${PREFIX}/delete/${id}`, {
     method: 'DELETE',
     credentials: 'include',
   })

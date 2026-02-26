@@ -1,11 +1,5 @@
 import type { Role, SectorEnum, StatusEnum } from './enums'
 
-export interface BaseSchema {
-  id: string
-  createdAt: string
-  updateAt: string | null
-}
-
 export interface LoginOptions {
   to: string
 }
@@ -19,14 +13,17 @@ export interface Entity {
   status: StatusEnum
 }
 
-export interface Project extends BaseSchema {
+export interface Project {
+  id: string
   name: string
-  locale: string
-  slug: string
   sector: SectorEnum
+  location: string
+  status: StatusEnum
+  entityId: string
+  createdAt: string
 }
 
 export interface SectorItem {
-  value: SectorEnum
   label: string
+  value: SectorEnum
 }
