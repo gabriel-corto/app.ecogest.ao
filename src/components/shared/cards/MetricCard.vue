@@ -1,25 +1,34 @@
 <template>
   <div
-    class="border-t-primary-600 rounded-lg border border-t border-neutral-200 bg-white p-6 transition-shadow"
+    class="rounded-lg border border-neutral-200 bg-white p-6"
+    :style="{ borderTopColor: props.color || '#525252', borderTopWidth: '4px' }"
   >
     <div class="flex items-center justify-between">
       <div>
-        <p class="text-sm font-medium text-neutral-600">{{ props.title }}</p>
+        <p class="text-xs font-bold tracking-wider text-neutral-500 uppercase">
+          {{ props.title }}
+        </p>
 
-        <div class="flex items-center gap-3">
-          <p class="mt-2 text-2xl font-bold text-neutral-900">
+        <div class="flex flex-col">
+          <p class="mt-1 text-2xl font-black text-neutral-900">
             {{ props.value }}
           </p>
-          <p class="mt-2 text-xs text-neutral-500">{{ props.description }}</p>
+          <p class="text-[10px] font-medium text-neutral-400">
+            {{ props.description }}
+          </p>
         </div>
       </div>
 
       <div
-        class="flex h-12 w-12 items-center justify-center rounded-lg bg-neutral-100 text-neutral-600"
+        class="flex h-12 w-12 items-center justify-center rounded-xl transition-colors"
+        :style="{
+          backgroundColor: `${props.color || '#525252'}15`,
+          color: props.color || '#525252',
+        }"
       >
         <UIcon
           :name="props.icon"
-          class="h-6 w-6"
+          class="h-7 w-7"
         />
       </div>
     </div>
@@ -27,7 +36,13 @@
 </template>
 
 <script setup lang="ts">
-import type { MetricCardItem } from '~/types/components'
+interface MetricCardItem {
+  title: string
+  value: string | number
+  description: string
+  icon: string
+  color?: string
+}
 
 const props = defineProps<MetricCardItem>()
 </script>

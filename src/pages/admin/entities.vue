@@ -177,6 +177,7 @@ const columns: TableColumn<Entity>[] = [
             label: 'Ver Detalhes',
             color: 'neutral',
             icon: 'i-hugeicons-eye',
+            disabled: selectedEntityId.value === row.original.id,
             onClick: () => onSelectEntity(row.original.id),
           }),
         ],

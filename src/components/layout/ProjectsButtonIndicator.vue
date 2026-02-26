@@ -4,7 +4,7 @@
       size="xl"
       variant="ghost"
       class="cursor-pointer"
-      icon="i-hugeicons-files-01"
+      icon="i-hugeicons-apartment"
     />
 
     <span

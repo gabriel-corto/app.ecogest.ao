@@ -3,29 +3,63 @@ import type { SidebarItems } from '@/types/components'
 export const navigationItems = ref<SidebarItems[]>([
   {
     activeClass: 'bg-primary-50',
-    label: 'Dashboard',
+    label: 'Navegação',
     type: 'label',
-    icon: 'i-hugeicons-dashboard-square-02',
+    icon: 'i-hugeicons-navigation-04',
     context: ['ADMIN', 'COMPANY'],
   },
   {
     activeClass: 'bg-primary-50',
-    label: 'Gestão Ambiental',
+    label: 'Visão Geral',
+    defaultOpen: true,
+    icon: 'i-hugeicons-grid-view',
+    context: ['COMPANY'],
+    to: '/entities',
+  },
+  {
+    activeClass: 'bg-primary-50',
+    label: 'Gestão de Projectos',
     defaultOpen: true,
     icon: 'i-hugeicons-align-bottom',
     context: ['COMPANY'],
     children: [
       {
         label: 'Meus Projectos',
-        icon: 'i-hugeicons-folder-01',
+        icon: 'i-hugeicons-apartment',
         to: '/entities/projects',
       },
       {
-        label: 'Minhas Licenças',
-        icon: 'i-hugeicons-file-badge',
-        to: '/entities/licenses',
+        label: 'Cadastrar Projectos',
+        icon: 'i-hugeicons-add-invoice',
       },
     ],
+  },
+  {
+    activeClass: 'bg-primary-50',
+    label: 'Gestão de Processos',
+    defaultOpen: true,
+    icon: 'i-hugeicons-hierarchy-files',
+    context: ['COMPANY'],
+    children: [
+      {
+        label: 'Processos Pendentes',
+        icon: 'i-hugeicons-files-01',
+        to: '/entities/processings',
+      },
+      {
+        label: 'Processos Emitidos',
+        icon: 'i-hugeicons-files-02',
+        to: '/entities/processes',
+      },
+    ],
+  },
+  {
+    activeClass: 'bg-primary-50',
+    label: 'Gestão do Sistema',
+    defaultOpen: true,
+    icon: 'lucide:shield-user',
+    context: ['ADMIN'],
+    to: '/admin',
   },
   {
     activeClass: 'bg-primary-50',

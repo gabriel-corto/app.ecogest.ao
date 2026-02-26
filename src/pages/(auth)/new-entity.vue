@@ -268,9 +268,6 @@ const showPassword = ref(false)
 const onSubmit = async (event: FormSubmitEvent<SignUpForm>) => {
   try {
     isSubmitting.value = true
-
-    await new Promise(resolve => setTimeout(resolve, 3000))
-
     await authStore.createNewEntity(event.data)
 
     useSuccessToast({

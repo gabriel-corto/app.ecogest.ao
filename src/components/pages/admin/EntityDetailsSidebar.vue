@@ -1,5 +1,10 @@
 <template>
-  <aside class="h-full w-1/4 border-l border-neutral-200 bg-white p-6">
+  <EntityDetailsSidebarSkeleton v-if="status === 'pending'" />
+
+  <aside
+    v-else
+    class="h-full w-1/4 border-l border-neutral-200 bg-white p-6"
+  >
     <div class="flex h-full flex-col gap-8">
       <div
         class="flex items-center justify-between border-b border-neutral-100 pb-4"
@@ -115,6 +120,7 @@
 
 <script setup lang="ts">
 import { adminService } from '~/services'
+import EntityDetailsSidebarSkeleton from './EntityDetailsSidebarSkeleton.vue'
 
 interface Props {
   entityId: string
@@ -124,7 +130,11 @@ const emit = defineEmits(['close', 'updated'])
 
 const props = defineProps<Props>()
 
-const { data: entity, refresh: refreshEntity } = useLazyAsyncData(
+const {
+  data: entity,
+  refresh: refreshEntity,
+  status,
+} = useLazyAsyncData(
   `entity-${props.entityId}`,
   () => adminService.getEntityDetails(props.entityId),
   {

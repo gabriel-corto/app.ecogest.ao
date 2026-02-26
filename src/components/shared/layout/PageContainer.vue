@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-10 px-11 py-16">
+  <div class="flex flex-col gap-10 px-11 py-8">
     <div class="flex items-center justify-between">
       <div>
         <h1 class="text-3xl font-semibold text-neutral-800">

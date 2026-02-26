@@ -170,8 +170,6 @@ const state = reactive<SignInForm>({
 const onSubmit = async (event: FormSubmitEvent<SignInForm>) => {
   try {
     isSubmitting.value = true
-    await new Promise(resolve => setTimeout(resolve, 2000))
-
     await authStore.login(event.data)
     isSubmitting.value = false
 

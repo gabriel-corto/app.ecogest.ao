@@ -46,8 +46,8 @@
     </div>
 
     <div class="flex items-center justify-between gap-3">
-      <ProcessesButtonIdicator v-if="authStore?.user?.role === 'COMPANY'" />
       <ProjectsButtonIndicator v-if="authStore?.user?.role === 'COMPANY'" />
+      <ProcessesButtonIdicator v-if="authStore?.user?.role === 'COMPANY'" />
 
       <EntitiesManagmentButtonIndicator
         v-if="authStore?.user?.role === 'ADMIN'"
@@ -57,7 +57,6 @@
         v-if="authStore?.user?.role === 'ADMIN'"
       />
 
-      <NotificationsButtonIndicator />
       <div class="h-8 w-px bg-neutral-200" />
 
       <AccountMenuDropdown />

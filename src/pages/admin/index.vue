@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/component-name-in-template-casing -->
 <template>
   <PageContainer
-    title="Gestão de Dashboard"
+    title="Gestão do Sistema"
     subtitle="Acompanhe os principais indicadores do sistema"
   >
     <template #metrics>
@@ -32,6 +32,7 @@
           title="Fiscalização & Auditoria"
           description="Processos de Fiscalização"
           icon="i-hugeicons-fingerprint-scan"
+          color="#dc143c"
         />
       </div>
 
@@ -104,7 +105,7 @@ const lineOptions: ApexOptions = {
   xaxis: {
     categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
   },
-  colors: ['#3b82f6'],
+  colors: ['#dc143c'],
   stroke: { curve: 'smooth' },
 }
 </script>

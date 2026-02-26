@@ -43,6 +43,7 @@ export const getAllAdministrators = async (params?: QueryParams) => {
 
 export const getEntityDetails = async (id: string) => {
   const api = useApiClient()
+  await new Promise(resolve => setTimeout(resolve, 2000))
 
   const response = await api<ApiResponse<Entity>>(`${PREFIX}/entities/${id}`, {
     method: 'GET',
