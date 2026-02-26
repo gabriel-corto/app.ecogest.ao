@@ -199,7 +199,6 @@ const {
 )
 
 const selectedEntityId = ref<string | null>(null)
-
 const onSelectEntity = (entityId: string) => {
   selectedEntityId.value = entityId
 }

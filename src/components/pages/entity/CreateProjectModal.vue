@@ -3,7 +3,7 @@
     title="Criar Projecto"
     close-icon="i-hugeicons-cancel-01"
     description="Preencha os dados abaixo para criar um projecto"
-    class="max-w-2xl"
+    class="max-w-xl"
   >
     <template #body>
       <UForm
@@ -87,7 +87,7 @@
             type="submit"
             class="w-full"
           >
-            Submeter Processo
+            Criar
           </UButton>
         </div>
       </UForm>

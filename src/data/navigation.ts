@@ -26,21 +26,8 @@ export const navigationItems = ref<SidebarItems[]>([
   {
     activeClass: 'bg-primary-50',
     label: 'Gestão de Processos',
-    defaultOpen: true,
-    icon: 'i-hugeicons-hierarchy-files',
+    icon: 'i-hugeicons-files-02',
     context: ['COMPANY'],
-    children: [
-      {
-        label: 'Processos Pendentes',
-        icon: 'i-hugeicons-files-01',
-        to: '/entities/processings',
-      },
-      {
-        label: 'Processos Emitidos',
-        icon: 'i-hugeicons-files-02',
-        to: '/entities/processes',
-      },
-    ],
   },
   {
     activeClass: 'bg-primary-50',

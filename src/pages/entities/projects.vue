@@ -45,6 +45,13 @@
         </template>
       </PageContainer>
     </div>
+
+    <ProjectDetailsSidebar
+      v-if="selectedProjectId"
+      :project-id="selectedProjectId"
+      @updated="refresh"
+      @close="selectedProjectId = null"
+    />
   </div>
 </template>
 
@@ -58,7 +65,11 @@ import TableFilterLine from '~/components/shared/layout/TableFilterLine.vue'
 import { projectsService } from '~/services'
 
 import { UBadge, UButton, UIcon, ULink } from '#components'
-import { useCreateProjectModal } from '~/domain/projects'
+import {
+  useCreateProjectModal,
+  useRequestLicenseModal,
+} from '~/domain/projects'
+import ProjectDetailsSidebar from '~/components/pages/entity/ProjectDetailsSidebar.vue'
 
 const columns: TableColumn<Project>[] = [
   {
@@ -69,6 +80,7 @@ const columns: TableColumn<Project>[] = [
         ULink,
         {
           class: 'flex items-center gap-2 text-primary-500 font-medium',
+          onClick: () => onSelectProjectId(row.original.id),
         },
         [
           h(UIcon, {
@@ -90,10 +102,6 @@ const columns: TableColumn<Project>[] = [
           class: 'flex items-center gap-2',
         },
         [
-          h(UIcon, {
-            name: 'i-hugeicons-arrow-up-right-01',
-            class: 'w-5 h-5',
-          }),
           h(UBadge, {
             label: useEnumTranslator().translate('sector', row.original.sector),
             color: sectorColors(row.original.sector).sectorColor.value,
@@ -142,7 +150,41 @@ const columns: TableColumn<Project>[] = [
       )
     },
   },
+  {
+    accessorKey: 'hasLicense',
+    header: 'Licença',
+    cell: ({ row }) => {
+      const _hasLicense = row.original.hasLicense
 
+      if (_hasLicense) {
+        return h('div', [
+          h(UIcon, {
+            name: '',
+          }),
+          h(UButton, {
+            variant: 'subtle',
+            label: 'Solicitada',
+            color: 'success',
+            size: 'sm',
+            icon: 'i-hugeicons-files-02',
+            onClick: () => onSelectProjectId(row.original.id),
+          }),
+        ])
+      }
+
+      return h(UButton, {
+        variant: 'outline',
+        label: 'Solicitar',
+        color: 'primary',
+        size: 'sm',
+        disabled: row.original.status === 'INACTIVE',
+        icon: 'i-hugeicons-arrow-up-right-01',
+        onClick: async () => {
+          await useRequestLicenseModal(row.original)
+        },
+      })
+    },
+  },
   {
     accessorKey: 'options',
     header: 'Acções',
@@ -154,10 +196,10 @@ const columns: TableColumn<Project>[] = [
         },
         [
           h(UButton, {
-            variant: 'subtle',
-            size: 'md',
+            variant: 'outline',
             label: 'Activar',
             color: 'success',
+            size: 'sm',
             disabled: row.original.status === 'ACTIVE',
             icon: 'i-hugeicons-arrow-up-right-01',
             onClick: async () => {
@@ -166,11 +208,12 @@ const columns: TableColumn<Project>[] = [
             },
           }),
           h(UButton, {
-            variant: 'subtle',
-            size: 'md',
+            variant: 'outline',
             label: 'Desactivar',
             color: 'primary',
-            disabled: row.original.status === 'INACTIVE',
+            size: 'sm',
+            disabled:
+              row.original.status === 'INACTIVE' || row.original.hasLicense,
             icon: 'i-hugeicons-arrow-down-left-01',
             onClick: async () => {
               await projectsService.inactiveProject(row.original.id)
@@ -178,11 +221,12 @@ const columns: TableColumn<Project>[] = [
             },
           }),
           h(UButton, {
-            variant: 'subtle',
-            size: 'md',
+            variant: 'outline',
             label: 'Eliminar',
+            size: 'sm',
             color: 'error',
             icon: 'i-hugeicons-delete-02',
+            disabled: row.original.hasLicense,
             onClick: async () => {
               try {
                 const r = await projectsService.deleteProject(row.original.id)
@@ -221,5 +265,10 @@ const onCreateProject = async () => {
   if (data) {
     refresh()
   }
+}
+
+const selectedProjectId = ref<string | null>(null)
+const onSelectProjectId = (projectId: string) => {
+  selectedProjectId.value = projectId
 }
 </script>

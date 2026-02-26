@@ -21,9 +21,9 @@ const STATUS_COLOR_MAP: Record<StatusEnum, StatusColor> = {
 
 const SECTOR_COLOR_MAP: Record<SectorEnum, SectorColor> = {
   AGRICULTURE: 'neutral',
-  EDUCATION: 'secondary',
+  EDUCATION: 'neutral',
   ENGINEERING: 'neutral',
-  INDUSTRIAL: 'secondary',
+  INDUSTRIAL: 'primary',
 }
 
 export function sectorColors(sector: MaybeRef<SectorEnum | undefined>) {

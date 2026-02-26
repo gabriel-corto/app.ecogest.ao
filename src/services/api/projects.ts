@@ -37,6 +37,18 @@ export const getAllByEntity = async (params?: QueryParams) => {
   return response
 }
 
+export const getProjectDetails = async (id: string) => {
+  const api = useApiClient()
+  await new Promise(resolve => setTimeout(resolve, 500))
+
+  const response = await api<ApiResponse<Project>>(`${PREFIX}/${id}`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+
+  return response.data
+}
+
 export const activateProject = async (id: string) => {
   const api = useApiClient()
 

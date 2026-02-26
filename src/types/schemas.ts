@@ -17,6 +17,7 @@ export interface Project {
   id: string
   name: string
   sector: SectorEnum
+  hasLicense: boolean
   location: string
   status: StatusEnum
   entityId: string

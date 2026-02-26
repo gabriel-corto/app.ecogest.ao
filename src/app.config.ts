@@ -4,6 +4,7 @@ export default defineAppConfig({
       primary: 'primary',
       success: 'emerald',
       error: 'red',
+      warning: 'amber',
     },
     input: {
       variants: {
@@ -81,7 +82,7 @@ export default defineAppConfig({
     },
     navigationMenu: {
       slots: {
-        link: 'mt-2 hover:bg-primary-50 rounded-xl',
+        link: 'mt-4 hover:bg-primary-50 rounded-xl',
         linkLeadingIcon: 'text-primary-700!',
         linkTrailingIcon: 'text-primary-700',
         childLinkIcon: 'size-10',

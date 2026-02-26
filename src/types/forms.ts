@@ -17,3 +17,8 @@ export interface CreateProjectBody {
   sector: SectorEnum
   location: string
 }
+
+export interface CreateLicenseRequestBody {
+  projectId: string
+  file: File
+}
