@@ -92,7 +92,8 @@ const onSubmit = async () => {
     return
   }
 
-  if (!props.project?.id || !entityProject.value?.id) {
+  const projectId = props.project?.id ?? entityProject.value?.id
+  if (!projectId) {
     useErrorToast({
       title: 'Selecione O Projecto',
     })
@@ -101,10 +102,9 @@ const onSubmit = async () => {
 
   const formData = new FormData()
   formData.append('file', state.file)
-  formData.append('projectId', props.project?.id || entityProject.value?.id)
+  formData.append('projectId', projectId)
 
   try {
-    loading.value = true
     const r = await licenseService.request(formData)
 
     useSuccessToast({

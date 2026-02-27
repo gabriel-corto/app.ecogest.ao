@@ -31,3 +31,15 @@ export const getLicenses = async (params?: QueryParams) => {
 
   return response
 }
+
+export const getLicense = async (id: string) => {
+  const api = useApiClient()
+  await new Promise(resolve => setTimeout(resolve, 2000))
+
+  const response = await api<ApiResponse<License>>(`${PREFIX}/${id}`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+
+  return response.data
+}

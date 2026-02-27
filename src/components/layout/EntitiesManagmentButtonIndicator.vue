@@ -6,8 +6,6 @@
       class="cursor-pointer"
       icon="i-hugeicons-user-list"
       to="/admin/entities"
-      :loading="status === 'pending'"
-      loading-icon="i-hugeicons-loading-03"
     />
 
     <span
@@ -21,7 +19,7 @@
 <script setup lang="ts">
 import { adminService } from '~/services'
 
-const { data: response, status } = await useLazyAsyncData(
+const { data: response } = await useLazyAsyncData(
   'all-company-entities',
   () => adminService.getAllCompanyEntities(),
   {

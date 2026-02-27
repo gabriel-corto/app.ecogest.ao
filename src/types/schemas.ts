@@ -36,6 +36,8 @@ export interface License {
   qrHash: string
   issuedAt: string
   licenseExpiresAt: string
+  project: Project
+  entity: Entity
 }
 
 export interface ProjectDetails extends Project {

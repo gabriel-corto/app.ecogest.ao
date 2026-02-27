@@ -1,5 +1,5 @@
 import type { ApiPageDataResponse, ApiResponse } from '@/types/api'
-import type { Entity } from '@/types/schemas'
+import type { Entity, License } from '@/types/schemas'
 
 const PREFIX = '/admin'
 
@@ -79,4 +79,19 @@ export const blockEntity = async (id: string) => {
   )
 
   return response.data
+}
+
+export const getLicenses = async (params?: QueryParams) => {
+  const api = useApiClient()
+
+  const response = await api<ApiPageDataResponse<License>>(
+    `${PREFIX}/licenses`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      params,
+    },
+  )
+
+  return response
 }

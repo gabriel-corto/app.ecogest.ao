@@ -42,20 +42,9 @@ export const navigationItems = ref<SidebarItems[]>([
     activeClass: 'bg-primary-50',
     label: 'Gestão de Licenças',
     defaultOpen: true,
-    icon: 'i-hugeicons-hierarchy-files',
+    icon: 'i-hugeicons-files-02',
     context: ['ADMIN'],
-    children: [
-      {
-        label: 'Licenças Pendentes',
-        icon: 'i-hugeicons-files-01',
-        to: '/admin/pending',
-      },
-      {
-        label: 'Licenças Emitidas',
-        icon: 'i-hugeicons-files-02',
-        to: '/admin/issued',
-      },
-    ],
+    to: '/admin/licenses',
   },
   {
     activeClass: 'bg-primary-50',
