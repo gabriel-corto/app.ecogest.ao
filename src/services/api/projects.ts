@@ -1,5 +1,5 @@
 import type { ApiPageDataResponse, ApiResponse } from '@/types/api'
-import type { Project } from '@/types/schemas'
+import type { Project, ProjectDetails } from '@/types/schemas'
 import type { CreateProjectBody } from '~/types/forms'
 
 const PREFIX = '/projects'
@@ -41,7 +41,7 @@ export const getProjectDetails = async (id: string) => {
   const api = useApiClient()
   await new Promise(resolve => setTimeout(resolve, 500))
 
-  const response = await api<ApiResponse<Project>>(`${PREFIX}/${id}`, {
+  const response = await api<ApiResponse<ProjectDetails>>(`${PREFIX}/${id}`, {
     method: 'GET',
     credentials: 'include',
   })

@@ -5,6 +5,7 @@
       variant="ghost"
       class="cursor-pointer"
       icon="i-hugeicons-apartment"
+      to="/entities/projects"
     />
 
     <span

@@ -23,6 +23,24 @@ export interface Project {
   entityId: string
   createdAt: string
 }
+export interface License {
+  id: string
+  number: string
+  requestFile: string
+  createdAt: string
+  status: StatusEnum
+  entityId: string
+  projectId: string
+  licenseNumber: string
+  licenseFileUrl: string
+  qrHash: string
+  issuedAt: string
+  licenseExpiresAt: string
+}
+
+export interface ProjectDetails extends Project {
+  licenses: License[]
+}
 
 export interface SectorItem {
   label: string

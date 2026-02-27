@@ -39,7 +39,6 @@
             icon="i-hugeicons-arrow-up-right-01"
             type="submit"
             class="w-full cursor-pointer"
-            @click="onSubmit()"
           >
             Enviar Solicitação
           </UButton>
@@ -53,10 +52,12 @@
 import type { Project } from '~/types/schemas'
 import ProjectInfoCard from './ProjectInfoCard.vue'
 import { z } from 'zod'
+import { licenseService } from '~/services'
 
 interface Props {
   project: Project | null
 }
+const emit = defineEmits(['close'])
 
 const props = defineProps<Props>()
 const loading = ref(false)
@@ -82,7 +83,32 @@ const onSubmit = async () => {
     return
   }
 
+  if (!props.project?.id) {
+    useErrorToast({
+      title: 'Selecione O Projecto',
+    })
+    return
+  }
+
   const formData = new FormData()
   formData.append('file', state.file)
+  formData.append('projectId', props.project.id)
+
+  try {
+    const r = await licenseService.request(formData)
+
+    useSuccessToast({
+      title: r.message,
+    })
+
+    emit('close', r.data)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    useErrorToast({
+      title: error.data.message,
+    })
+  } finally {
+    loading.value = false
+  }
 }
 </script>

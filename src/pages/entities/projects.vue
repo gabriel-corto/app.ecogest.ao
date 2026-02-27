@@ -180,7 +180,10 @@ const columns: TableColumn<Project>[] = [
         disabled: row.original.status === 'INACTIVE',
         icon: 'i-hugeicons-arrow-up-right-01',
         onClick: async () => {
-          await useRequestLicenseModal(row.original)
+          const data = await useRequestLicenseModal(row.original)
+          if (data) {
+            refresh()
+          }
         },
       })
     },
