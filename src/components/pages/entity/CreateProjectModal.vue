@@ -58,7 +58,6 @@
           </UFormField>
         </div>
 
-        <!-- Informação Importante -->
         <UAlert
           icon="i-hugeicons-alert-02"
           color="primary"

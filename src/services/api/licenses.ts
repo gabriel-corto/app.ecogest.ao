@@ -43,3 +43,19 @@ export const getLicense = async (id: string) => {
 
   return response.data
 }
+
+export const reRequest = async (id: string, body: FormData) => {
+  const api = useApiClient()
+  await new Promise(resolve => setTimeout(resolve, 2000))
+
+  const response = await api<ApiResponse<License>>(
+    `${PREFIX}/${id}/re-request`,
+    {
+      method: 'PATCH',
+      credentials: 'include',
+      body,
+    },
+  )
+
+  return response
+}

@@ -196,7 +196,7 @@ const columns: TableColumn<Project>[] = [
       return h(
         'div',
         {
-          class: 'flex items-center gap-x-6',
+          class: 'flex items-center gap-x-4',
         },
         [
           h(UButton, {

@@ -15,7 +15,7 @@
             class="text-primary-600 h-8 w-8"
           />
           <h2 class="font-semibold tracking-tight text-neutral-900">
-            Detalhes do Pedido de Licença
+            Detalhes do Processo
           </h2>
         </div>
 
@@ -30,7 +30,7 @@
 
       <div class="border-b border-b-neutral-200 pb-3">
         <h3 class="text-sm font-semibold tracking-tight text-neutral-700">
-          Detalhes da Entidade
+          Informações do Processo
         </h3>
 
         <div class="mt-3 grid grid-cols-2 space-y-4 gap-x-16">
@@ -38,72 +38,36 @@
             <label
               class="mb-1 flex items-center gap-2 text-xs text-neutral-500"
             >
-              Entidade
+              Estado
+            </label>
+
+            <UBadge
+              :color="statusColors(process?.status).statusColor.value"
+              variant="subtle"
+              size="sm"
+              :label="useEnumTranslator().translate('status', process?.status)"
+            />
+          </div>
+
+          <div>
+            <label
+              class="mb-1 flex items-center gap-2 text-xs text-neutral-500"
+            >
+              Nº do Processo
             </label>
 
             <div class="flex items-center gap-2">
-              <div class="flex flex-col gap-y-1.5">
-                <div class="flex items-center gap-x-1 text-xs">
-                  <p class="text-xs">NIF:</p>
-                  <p class="text-xs text-neutral-800">
-                    {{ license?.entity.nif }}
-                  </p>
-                </div>
-
-                <div class="flex items-center gap-x-1 text-xs">
-                  <p class="text-xs">Nome:</p>
-                  <p class="text-xs text-neutral-800">
-                    {{ license?.entity.name }}
-                  </p>
-                </div>
-              </div>
+              <h4 class="text-xs font-medium text-neutral-800">
+                {{ process?.number }}
+              </h4>
             </div>
-          </div>
-
-          <div>
-            <label
-              class="mb-1 flex items-center gap-2 text-xs text-neutral-500"
-            >
-              Nº Processo
-            </label>
-            <UBadge
-              color="error"
-              variant="subtle"
-              size="sm"
-              :label="license?.number"
-            />
-          </div>
-
-          <div>
-            <label
-              class="mb-1 flex items-center gap-2 text-xs text-neutral-500"
-            >
-              Data de Solicitação
-            </label>
-            <p class="text-xs font-medium text-neutral-800">
-              {{ useDateFormatter(license?.createdAt as string) }}
-            </p>
-          </div>
-
-          <div>
-            <label
-              class="mb-1 flex items-center gap-2 text-xs text-neutral-500"
-            >
-              Estado do Pedido
-            </label>
-            <UBadge
-              :color="statusColors(license?.status).statusColor.value"
-              variant="subtle"
-              size="sm"
-              :label="useEnumTranslator().translate('status', license?.status)"
-            />
           </div>
         </div>
       </div>
 
       <div class="border-b border-b-neutral-200 pb-3">
         <h3 class="text-sm font-semibold tracking-tight text-neutral-700">
-          Detalhes do Projecto
+          Informações do Projecto
         </h3>
 
         <div class="mt-3 grid grid-cols-2 space-y-4 gap-x-16">
@@ -118,21 +82,21 @@
               <div class="flex flex-col gap-y-1.5">
                 <div class="flex items-center gap-x-1 text-xs">
                   <p class="text-xs text-neutral-800">
-                    {{ license?.project.name }}
+                    {{ process?.project.name }}
                   </p>
                 </div>
 
                 <div class="flex items-center gap-x-1 text-xs">
                   <UBadge
                     :color="
-                      sectorColors(license?.project.sector).sectorColor.value
+                      sectorColors(process?.project.sector).sectorColor.value
                     "
                     variant="subtle"
                     size="xs"
                     :label="
                       useEnumTranslator().translate(
                         'sector',
-                        license?.project.sector,
+                        process?.project.sector,
                       )
                     "
                   />
@@ -145,7 +109,7 @@
             <label
               class="mb-1 flex items-center gap-2 text-xs text-neutral-500"
             >
-              Localização do Projecto
+              Localização
             </label>
 
             <div class="flex items-center gap-2">
@@ -154,14 +118,14 @@
                 class="text-primary-600 h-4 w-4"
               />
               <p class="text-xs font-medium text-neutral-800">
-                {{ license?.project.location }}
+                {{ process?.project.location }}
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      <template v-if="license?.licenseFileUrl">
+      <template v-if="process?.licenseFileUrl">
         <div class="space-y-4">
           <div
             class="flex items-center justify-between border-t border-neutral-100 pt-6"
@@ -179,13 +143,13 @@
                 <div class="space-y-1">
                   <div class="flex w-full items-center justify-between gap-4">
                     <p class="font-black text-neutral-900">
-                      {{ license?.licenseNumber }}
+                      {{ process?.licenseNumber }}
                     </p>
                   </div>
 
                   <p class="text-xs text-neutral-400">
                     Solicitado em:
-                    {{ useDateFormatter(license?.createdAt as string) }}
+                    {{ useDateFormatter(process?.createdAt as string) }}
                   </p>
                 </div>
 
@@ -199,10 +163,6 @@
                         class="h-6 w-6 text-neutral-400"
                       />
                     </div>
-
-                    <p class="text-sm font-medium text-neutral-800">
-                      {{ license?.licenseFileUrl }}
-                    </p>
                   </div>
                 </div>
               </div>
@@ -218,7 +178,7 @@
                   <span class="text-xs font-medium text-neutral-500"
                     >Expira em:
                     {{
-                      useDateFormatter(license?.licenseExpiresAt as string)
+                      useDateFormatter(process?.licenseExpiresAt as string)
                     }}</span
                   >
                 </div>
@@ -229,16 +189,37 @@
               </div>
             </div>
           </div>
+
+          <div>
+            <UButton
+              variant="subtle"
+              color="primary"
+              icon="i-hugeicons-files-02"
+              :to="process?.licenseFileUrl"
+              target="_blank"
+              label="Exportar Licença"
+            />
+          </div>
         </div>
+      </template>
+
+      <template v-if="process?.status === 'REJECTED'">
+        <UAlert
+          icon="i-hugeicons-alert-02"
+          color="error"
+          variant="soft"
+          title="Solicitação de Licença Rejeitada"
+          :description="`${process?.rejectReason}`"
+        />
       </template>
 
       <template v-else>
         <h3 class="text-sm font-semibold tracking-tight text-neutral-700">
-          Documento de Licença
+          Obserações
         </h3>
 
         <div
-          class="flex flex-col items-center gap-3 rounded-md border border-neutral-200 p-6 text-center"
+          class="flex flex-col items-center gap-3 rounded-xl border border-dashed border-neutral-200 p-6 text-center"
         >
           <div
             class="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-200 bg-neutral-50"
@@ -249,36 +230,26 @@
             />
           </div>
 
-          <p class="text-sm text-neutral-500">
-            Documento de licença não emitido
+          <p class="text-xs text-neutral-500">
+            Ainda não foi emitido uma licença para este processo
           </p>
         </div>
       </template>
 
-      <div class="mt-auto space-y-4 border-t border-neutral-100 pt-6">
+      <div
+        v-if="process?.status === 'REJECTED'"
+        class="mt-auto space-y-4 border-t border-neutral-100 pt-6"
+      >
         <UButton
-          v-if="license?.status === 'PENDING'"
           block
           variant="subtle"
           icon="i-hugeicons-arrow-up-right-01"
-          color="success"
+          color="primary"
           class="text-sm font-medium"
           size="xl"
+          @click="onReRequestLicense(process)"
         >
-          Aprovar Pedido
-        </UButton>
-
-        <UButton
-          v-if="license?.status === 'PENDING'"
-          block
-          variant="subtle"
-          icon="i-hugeicons-arrow-down-left-01"
-          color="error"
-          class="text-sm font-medium"
-          size="xl"
-          @click="onRejectProcess(license)"
-        >
-          Rejeitar Pedido
+          Reenviar Solicitação
         </UButton>
       </div>
     </div>
@@ -288,23 +259,23 @@
 <script setup lang="ts">
 import { licenseService } from '~/services'
 import SidebarSkeleton from '~/components/shared/SidebarSkeleton.vue'
-import { useRejectProcessModal } from '~/domain/projects'
+import { useRequestLicenseAgainModal } from '~/domain/projects'
 import type { License } from '~/types/schemas'
 
 interface Props {
-  license: string
+  process: string
 }
 
 const emit = defineEmits(['close', 'updated'])
 const props = defineProps<Props>()
 
 const {
-  data: license,
+  data: process,
   status,
   refresh,
 } = useLazyAsyncData(
-  `license-${props.license}`,
-  () => licenseService.getLicense(props.license),
+  `license-${props.process}`,
+  () => licenseService.getLicense(props.process),
   {
     server: false,
     watch: [props],
@@ -315,21 +286,10 @@ defineExpose({
   refresh,
 })
 
-// const onActivateEntity = async () => {
-//   const updated = await adminService.activateEntity(props.entityId)
-
-//   if (updated) {
-//     refreshEntity()
-//     emit('updated')
-//   }
-// }
-
-const onRejectProcess = async (license: License) => {
-  const data = await useRejectProcessModal(license)
-
+const onReRequestLicense = async (process: License) => {
+  const data = await useRequestLicenseAgainModal(process)
   if (data) {
     refresh()
-    emit('updated')
   }
 }
 </script>

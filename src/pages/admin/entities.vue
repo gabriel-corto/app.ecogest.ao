@@ -38,9 +38,10 @@
 
     <EntityDetailsSidebar
       v-if="selectedEntityId"
+      ref="sidebarRef"
       :entity-id="selectedEntityId"
       @close="selectedEntityId = null"
-      @updated="refresh()"
+      @updated="refreshAll()"
     />
   </div>
 </template>
@@ -156,7 +157,7 @@ const columns: TableColumn<Entity>[] = [
             icon: 'i-hugeicons-arrow-up-right-01',
             onClick: async () => {
               await adminService.activateEntity(row.original.id)
-              refresh()
+              refreshAll()
             },
           }),
           h(UButton, {
@@ -168,7 +169,7 @@ const columns: TableColumn<Entity>[] = [
             icon: 'i-hugeicons-arrow-down-left-01',
             onClick: async () => {
               await adminService.blockEntity(row.original.id)
-              refresh()
+              refreshAll()
             },
           }),
           h(UButton, {
@@ -199,6 +200,15 @@ const {
 )
 
 const selectedEntityId = ref<string | null>(null)
+const sidebarRef = ref<InstanceType<typeof EntityDetailsSidebar> | null>(null)
+
+const refreshAll = () => {
+  refresh()
+  if (sidebarRef.value) {
+    sidebarRef.value.refresh()
+  }
+}
+
 const onSelectEntity = (entityId: string) => {
   selectedEntityId.value = entityId
 }

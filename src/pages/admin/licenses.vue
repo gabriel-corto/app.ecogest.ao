@@ -38,8 +38,10 @@
 
     <LicenseDetailSidebar
       v-if="selectedLicenseId"
+      ref="sidebarRef"
       :license="selectedLicenseId"
       @close="selectedLicenseId = null"
+      @updated="refreshAll()"
     />
   </div>
 </template>
@@ -56,6 +58,7 @@ import TableFilterLine from '~/components/shared/layout/TableFilterLine.vue'
 
 import { UBadge, UButton, UIcon } from '#components'
 import LicenseDetailSidebar from '~/components/pages/admin/LicenseDetailSidebar.vue'
+import { useRejectProcessModal } from '~/domain/projects'
 
 const columns: TableColumn<License>[] = [
   {
@@ -161,6 +164,7 @@ const columns: TableColumn<License>[] = [
             onClick: () => onSelectLicense(row.original.id),
           }),
           h(UButton, {
+            disabled: row.original.status === 'REJECTED',
             variant: 'outline',
             label: 'Aprovar',
             color: 'success',
@@ -168,11 +172,18 @@ const columns: TableColumn<License>[] = [
             icon: 'i-hugeicons-arrow-up-right-01',
           }),
           h(UButton, {
+            disabled: row.original.status === 'REJECTED',
             variant: 'outline',
             label: 'Rejeitar',
             color: 'error',
             size: 'sm',
             icon: 'i-hugeicons-arrow-down-left-01',
+            onClick: async () => {
+              const data = await useRejectProcessModal(row.original)
+              if (data) {
+                refreshAll()
+              }
+            },
           }),
         ],
       )
@@ -193,6 +204,14 @@ const {
 )
 
 const selectedLicenseId = ref<string | null>(null)
+const sidebarRef = ref<InstanceType<typeof LicenseDetailSidebar> | null>(null)
+
+const refreshAll = () => {
+  refresh()
+  if (sidebarRef.value) {
+    sidebarRef.value.refresh()
+  }
+}
 
 const onSelectLicense = (license: string) => {
   selectedLicenseId.value = license

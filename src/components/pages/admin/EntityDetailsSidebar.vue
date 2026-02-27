@@ -160,4 +160,8 @@ const onBlockEntity = async () => {
     emit('updated')
   }
 }
+
+defineExpose({
+  refresh: refreshEntity,
+})
 </script>

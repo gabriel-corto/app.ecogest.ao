@@ -38,6 +38,7 @@ export interface License {
   licenseExpiresAt: string
   project: Project
   entity: Entity
+  rejectReason?: string
 }
 
 export interface ProjectDetails extends Project {

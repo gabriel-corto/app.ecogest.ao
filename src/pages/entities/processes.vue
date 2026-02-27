@@ -44,6 +44,14 @@
         </template>
       </PageContainer>
     </div>
+
+    <ProcessDetailsSidebar
+      v-if="selectedProcessId"
+      ref="sidebarRef"
+      :process="selectedProcessId"
+      @close="selectedProcessId = null"
+      @updated="refreshAll()"
+    />
   </div>
 </template>
 
@@ -57,7 +65,11 @@ import TableFilterLine from '~/components/shared/layout/TableFilterLine.vue'
 import { licenseService } from '~/services'
 
 import { UBadge, UButton } from '#components'
-import { useRequestLicenseModal } from '~/domain/projects'
+import {
+  useRequestLicenseAgainModal,
+  useRequestLicenseModal,
+} from '~/domain/projects'
+import ProcessDetailsSidebar from '~/components/pages/entity/ProcessDetailsSidebar.vue'
 
 const columns: TableColumn<License>[] = [
   {
@@ -72,6 +84,7 @@ const columns: TableColumn<License>[] = [
         icon: 'i-hugeicons-files-01',
         class:
           'text-primary-500 border border-primary-300 font-semibold rounded-md',
+        onClick: () => onSelectProcess(row.original.id),
       })
     },
   },
@@ -117,6 +130,39 @@ const columns: TableColumn<License>[] = [
       return h('span', useDateFormatter(row.original.createdAt))
     },
   },
+  {
+    accessorKey: 'actions',
+    header: 'Acções',
+    cell: ({ row }) => {
+      return h(
+        'div',
+        {
+          class: 'flex items-center gap-4',
+        },
+        [
+          h(UButton, {
+            variant: 'link',
+            label: 'Ver Detalhes',
+            color: 'primary',
+            size: 'sm',
+            icon: 'i-hugeicons-eye',
+            class: 'text-primary-500 border border-primary-300 rounded-md',
+            onClick: () => onSelectProcess(row.original.id),
+          }),
+
+          row.original.status === 'REJECTED' &&
+            h(UButton, {
+              variant: 'outline',
+              label: 'Reenviar Solicitação',
+              color: 'success',
+              size: 'sm',
+              icon: 'i-hugeicons-arrow-up-right-01',
+              onClick: () => onReRequestLicense(row.original),
+            }),
+        ],
+      )
+    },
+  },
 ]
 
 const {
@@ -135,7 +181,29 @@ const onRequestLicense = async () => {
   const data = await useRequestLicenseModal()
 
   if (data) {
-    refresh()
+    refreshAll()
   }
+}
+
+const onReRequestLicense = async (process: License) => {
+  const data = await useRequestLicenseAgainModal(process)
+
+  if (data) {
+    refreshAll()
+  }
+}
+
+const selectedProcessId = ref<string | null>(null)
+const sidebarRef = ref<InstanceType<typeof ProcessDetailsSidebar> | null>(null)
+
+const refreshAll = () => {
+  refresh()
+  if (sidebarRef.value) {
+    sidebarRef.value.refresh()
+  }
+}
+
+const onSelectProcess = (process: string) => {
+  selectedProcessId.value = process
 }
 </script>

@@ -95,3 +95,34 @@ export const getLicenses = async (params?: QueryParams) => {
 
   return response
 }
+
+export const approveLicense = async (id: string) => {
+  const api = useApiClient()
+  await new Promise(resolve => setTimeout(resolve, 2000))
+
+  const response = await api<ApiResponse<License>>(
+    `${PREFIX}/licenses/${id}/approve`,
+    {
+      method: 'PATCH',
+      credentials: 'include',
+    },
+  )
+
+  return response
+}
+
+export const rejectLicense = async (id: string, body: { reason: string }) => {
+  const api = useApiClient()
+  await new Promise(resolve => setTimeout(resolve, 2000))
+
+  const response = await api<ApiResponse<License>>(
+    `${PREFIX}/licenses/${id}/reject`,
+    {
+      method: 'PATCH',
+      credentials: 'include',
+      body,
+    },
+  )
+
+  return response
+}
