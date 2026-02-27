@@ -17,7 +17,7 @@ const TRANSLATIONS: {
     COMPANY: 'EMPRESA',
   },
   status: {
-    PENDING: 'PENDENTE',
+    PENDING: 'EM ANÁLISE',
     APPROVED: 'APROVADO',
     REJECTED: 'REJEITADO',
     ACTIVE: 'ACTIVO',

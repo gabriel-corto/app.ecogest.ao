@@ -2,7 +2,13 @@ import type { MaybeRef } from 'vue'
 import type { Role, SectorEnum, StatusEnum } from '~/types/enums'
 
 type RoleColor = 'primary' | 'secondary' | 'neutral'
-type StatusColor = 'primary' | 'secondary' | 'success' | 'error' | 'neutral'
+type StatusColor =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'error'
+  | 'neutral'
+  | 'warning'
 type SectorColor = 'primary' | 'secondary' | 'success' | 'error' | 'neutral'
 
 const ROLE_COLOR_MAP: Record<Role, RoleColor> = {
@@ -11,7 +17,7 @@ const ROLE_COLOR_MAP: Record<Role, RoleColor> = {
 }
 
 const STATUS_COLOR_MAP: Record<StatusEnum, StatusColor> = {
-  PENDING: 'primary',
+  PENDING: 'warning',
   APPROVED: 'success',
   REJECTED: 'error',
   ACTIVE: 'success',

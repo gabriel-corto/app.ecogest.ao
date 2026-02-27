@@ -70,60 +70,88 @@
         </div>
       </div>
 
-      <div class="space-y-4">
+      <template v-if="project?.licenses.length">
         <div
-          class="flex items-center justify-between border-t border-neutral-100 pt-6"
+          v-for="license in project?.licenses"
+          :key="license.id"
+          class="space-y-4"
         >
-          <h3 class="text-sm font-medium text-neutral-500">
-            Histórico de Processos
-          </h3>
-        </div>
-
-        <div class="space-y-3">
           <div
-            class="cursor-pointer rounded-lg border border-neutral-200 bg-white p-4"
+            class="flex items-center justify-between border-t border-neutral-100 pt-6"
           >
-            <div class="flex items-start justify-between">
-              <div class="space-y-1">
-                <div class="flex w-full items-center justify-between gap-4">
-                  <p class="font-black text-neutral-900">PRC/002/2026</p>
+            <h3 class="text-sm font-medium text-neutral-500">
+              Histórico de Processos
+            </h3>
+          </div>
+
+          <div class="space-y-3">
+            <div
+              class="cursor-pointer rounded-lg border border-neutral-200 bg-white p-4"
+            >
+              <div class="flex items-start justify-between">
+                <div class="space-y-1">
+                  <div class="flex w-full items-center justify-between gap-4">
+                    <p class="font-black text-neutral-900">
+                      {{ license.number }}
+                    </p>
+                  </div>
+
+                  <p class="text-xs text-neutral-400">
+                    Solicitado em: {{ useDateFormatter(license.createdAt) }}
+                  </p>
                 </div>
 
-                <p class="text-xs text-neutral-400">
-                  Solicitado em: 26/02/2026
-                </p>
+                <div class="flex items-center gap-x-2">
+                  <UBadge
+                    :color="statusColors(license.status).statusColor.value"
+                    variant="subtle"
+                    >{{
+                      useEnumTranslator().translate('status', license.status)
+                    }}
+                  </UBadge>
+                </div>
               </div>
 
-              <div class="flex items-center gap-x-2">
-                <UBadge
-                  color="warning"
-                  variant="subtle"
-                  >Em Análise</UBadge
-                >
-              </div>
-            </div>
-
-            <div
-              v-if="project?.hasLicense"
-              class="mt-4 flex items-center justify-between border-t border-neutral-50 pt-3"
-            >
-              <div class="flex items-center gap-1.5">
+              <div
+                v-if="license.status === 'APPROVED'"
+                class="mt-4 flex items-center justify-between border-t border-neutral-50 pt-3"
+              >
+                <div class="flex items-center gap-1.5">
+                  <UIcon
+                    name="i-hugeicons-calendar-03"
+                    class="h-4 w-4 text-neutral-400"
+                  />
+                  <span class="text-xs font-medium text-neutral-500"
+                    >Expira em:
+                    {{ useDateFormatter(license.licenseExpiresAt) }}</span
+                  >
+                </div>
                 <UIcon
-                  name="i-hugeicons-calendar-03"
-                  class="h-4 w-4 text-neutral-400"
+                  name="i-hugeicons-arrow-right-01"
+                  class="h-4 w-4 text-neutral-300"
                 />
-                <span class="text-xs font-medium text-neutral-500"
-                  >Expira em: 26/02/2029</span
-                >
               </div>
-              <UIcon
-                name="i-hugeicons-arrow-right-01"
-                class="h-4 w-4 text-neutral-300"
-              />
             </div>
           </div>
         </div>
-      </div>
+      </template>
+
+      <template v-else>
+        <div
+          class="mt-6 flex flex-col items-center gap-3 rounded-md border border-neutral-200 p-6"
+        >
+          <div
+            class="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-200 bg-neutral-50"
+          >
+            <UIcon
+              name="i-hugeicons-files-02"
+              class="h-6 w-6 text-neutral-400"
+            />
+          </div>
+
+          <p class="text-sm text-neutral-500">Nenhum processo encontrado!</p>
+        </div>
+      </template>
 
       <div class="mt-auto space-y-3 border-t border-neutral-100 pt-6">
         <!-- <UButton
@@ -161,10 +189,13 @@ interface Props {
 }
 
 const emit = defineEmits(['close', 'updated'])
-
 const props = defineProps<Props>()
 
-const { data: project, status } = useLazyAsyncData(
+const {
+  data: project,
+  status,
+  refresh,
+} = useLazyAsyncData(
   `project-${props.projectId}`,
   () => projectsService.getProjectDetails(props.projectId),
   {
@@ -172,6 +203,10 @@ const { data: project, status } = useLazyAsyncData(
     watch: [props],
   },
 )
+
+defineExpose({
+  refresh,
+})
 
 // const onActivateEntity = async () => {
 //   const updated = await adminService.activateEntity(props.entityId)

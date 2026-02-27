@@ -14,7 +14,7 @@
                   color="neutral"
                   size="lg"
                   icon="i-hugeicons-arrow-reload-horizontal"
-                  @click="refresh()"
+                  @click="refreshAll()"
                 />
 
                 <UInput
@@ -48,8 +48,9 @@
 
     <ProjectDetailsSidebar
       v-if="selectedProjectId"
+      ref="sidebarRef"
       :project-id="selectedProjectId"
-      @updated="refresh"
+      @updated="refreshAll"
       @close="selectedProjectId = null"
     />
   </div>
@@ -182,7 +183,7 @@ const columns: TableColumn<Project>[] = [
         onClick: async () => {
           const data = await useRequestLicenseModal(row.original)
           if (data) {
-            refresh()
+            refreshAll()
           }
         },
       })
@@ -207,7 +208,7 @@ const columns: TableColumn<Project>[] = [
             icon: 'i-hugeicons-arrow-up-right-01',
             onClick: async () => {
               await projectsService.activateProject(row.original.id)
-              refresh()
+              refreshAll()
             },
           }),
           h(UButton, {
@@ -220,7 +221,7 @@ const columns: TableColumn<Project>[] = [
             icon: 'i-hugeicons-arrow-down-left-01',
             onClick: async () => {
               await projectsService.inactiveProject(row.original.id)
-              refresh()
+              refreshAll()
             },
           }),
           h(UButton, {
@@ -233,7 +234,7 @@ const columns: TableColumn<Project>[] = [
             onClick: async () => {
               try {
                 const r = await projectsService.deleteProject(row.original.id)
-                refresh()
+                refreshAll()
 
                 useSuccessToast({ title: r.message })
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -266,7 +267,16 @@ const onCreateProject = async () => {
   const data = await useCreateProjectModal()
 
   if (data) {
-    refresh()
+    refreshAll()
+  }
+}
+
+const sidebarRef = ref<InstanceType<typeof ProjectDetailsSidebar> | null>(null)
+
+const refreshAll = () => {
+  refresh()
+  if (sidebarRef.value) {
+    sidebarRef.value.refresh()
   }
 }
 

@@ -18,6 +18,11 @@
           :project="props.project"
         />
 
+        <SelectProjectModal
+          v-else
+          v-model="entityProject"
+        />
+
         <UFormField
           label="Documento (EIA)"
           required
@@ -34,6 +39,7 @@
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:justify-end">
           <UButton
+            :loading="loading"
             loading-icon="i-hugeicons-loading-03"
             size="default"
             icon="i-hugeicons-arrow-up-right-01"
@@ -53,9 +59,10 @@ import type { Project } from '~/types/schemas'
 import ProjectInfoCard from './ProjectInfoCard.vue'
 import { z } from 'zod'
 import { licenseService } from '~/services'
+import SelectProjectModal from './SelectProjectModal.vue'
 
 interface Props {
-  project: Project | null
+  project?: Project | null
 }
 const emit = defineEmits(['close'])
 
@@ -73,6 +80,8 @@ const state = reactive<
   }>
 >({})
 
+const entityProject = ref<Project | undefined>()
+
 const onSubmit = async () => {
   loading.value = true
 
@@ -83,7 +92,7 @@ const onSubmit = async () => {
     return
   }
 
-  if (!props.project?.id) {
+  if (!props.project?.id || !entityProject.value?.id) {
     useErrorToast({
       title: 'Selecione O Projecto',
     })
@@ -92,9 +101,10 @@ const onSubmit = async () => {
 
   const formData = new FormData()
   formData.append('file', state.file)
-  formData.append('projectId', props.project.id)
+  formData.append('projectId', props.project?.id || entityProject.value?.id)
 
   try {
+    loading.value = true
     const r = await licenseService.request(formData)
 
     useSuccessToast({

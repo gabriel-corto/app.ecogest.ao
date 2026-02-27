@@ -10,7 +10,7 @@ export const useCreateProjectModal = async () => {
   return (await modal.open()) as Project | undefined
 }
 
-export const useRequestLicenseModal = async (project: Project) => {
+export const useRequestLicenseModal = async (project?: Project) => {
   const overlay = useOverlay()
   const modal = overlay.create(RequestLicenseModal, {
     props: {
