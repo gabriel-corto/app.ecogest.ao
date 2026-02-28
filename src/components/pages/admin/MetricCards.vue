@@ -6,6 +6,7 @@
         title="Entidades cadastradas"
         description="Entidades cadastradas"
         icon="i-hugeicons-user-square"
+        @click="navigateTo('/admin/entities')"
       />
 
       <MetricCard
@@ -13,6 +14,7 @@
         title="Licenças Emitidas"
         description="Licenças Aprovadas e Emitidas"
         icon="i-hugeicons-files-02"
+        @click="navigateTo('/admin/licenses')"
       />
 
       <MetricCard
@@ -20,6 +22,7 @@
         title="Processos Pendentes"
         description="Aguardam verificação"
         icon="i-hugeicons-file-sync"
+        @click="navigateTo('/admin/licenses')"
       />
 
       <MetricCard
@@ -28,6 +31,7 @@
         description="Solicitações de licenças rejeitadas"
         icon="i-hugeicons-fingerprint-scan"
         color="#dc143c"
+        @click="navigateTo('/admin/licenses')"
       />
     </template>
 

@@ -1,7 +1,8 @@
 <template>
   <div
-    class="rounded-lg border border-neutral-200 bg-white p-6"
+    class="cursor-pointer rounded-lg border border-neutral-200 bg-white p-6"
     :style="{ borderTopColor: props.color || '#525252', borderTopWidth: '4px' }"
+    @click="props.onClick"
   >
     <div class="flex items-center justify-between">
       <div>
@@ -42,6 +43,7 @@ interface MetricCardItem {
   description: string
   icon: string
   color?: string
+  onClick?: () => void
 }
 
 const props = defineProps<MetricCardItem>()
