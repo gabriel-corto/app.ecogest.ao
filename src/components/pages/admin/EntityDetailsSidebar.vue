@@ -58,36 +58,69 @@
         </div>
       </div>
 
-      <div class="space-y-4">
-        <div
-          class="flex items-center justify-between border-t border-neutral-100 pt-6"
-        >
-          <h3 class="text-neutral-900">Licenças Emitidas</h3>
-        </div>
-
-        <div class="space-y-2">
+      <template v-if="entity?.licenses.length">
+        <div class="space-y-4">
           <div
+            class="flex items-center justify-between border-t border-neutral-100 pt-6"
+          >
+            <h3 class="text-neutral-900">Processos de Licenciamento</h3>
+          </div>
+
+          <div
+            v-for="license in entity?.licenses"
+            :key="license.id"
             class="cursor-pointer rounded-lg border border-neutral-200 bg-neutral-50 p-4 transition-colors"
           >
             <div class="flex items-start justify-between gap-2">
               <div class="flex flex-col gap-y-2">
                 <p class="text-sm font-bold text-neutral-800">
-                  Licença de Instalação
+                  {{ license.number }}
                 </p>
-                <p class="text-xs text-neutral-500">Edifício Horizonte</p>
+
+                <div>
+                  <UIcon
+                    name="i-hugeicons-apartment"
+                    class="text-primary-500 h-6 w-6"
+                  />
+                  <p class="text-xs text-neutral-500">
+                    {{ license.project.name }}
+                  </p>
+                </div>
               </div>
-              <UIcon
-                name="i-hugeicons-files-01"
-                class="text-primary-500 h-6 w-6"
-              />
-            </div>
-            <div class="mt-4 flex items-center gap-2">
-              <span class="text-sm text-neutral-400">Expira em:</span>
-              <span class="text-sm font-medium text-neutral-600">12/2026</span>
+
+              <div>
+                <UBadge
+                  variant="subtle"
+                  :color="statusColors(license.status).statusColor.value"
+                  size="sm"
+                  :label="
+                    useEnumTranslator().translate('status', license.status)
+                  "
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </template>
+
+      <template v-else>
+        <div
+          class="flex flex-col items-center gap-3 rounded-md border border-neutral-200 p-6 text-center"
+        >
+          <div
+            class="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-200 bg-neutral-50"
+          >
+            <UIcon
+              name="i-hugeicons-files-02"
+              class="h-6 w-6 text-neutral-400"
+            />
+          </div>
+
+          <p class="text-sm text-neutral-500">
+            A Entidade {{ entity?.name }} Não possui processos a decorrer!
+          </p>
+        </div>
+      </template>
 
       <div class="mt-auto space-y-3 border-t border-neutral-100 pt-6">
         <UButton

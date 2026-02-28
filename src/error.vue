@@ -11,7 +11,7 @@ const handleError = () => {
   if (authStore.user?.role === 'ADMIN') {
     clearError({ redirect: '/admin' })
   } else {
-    clearError({ redirect: '/entity' })
+    clearError({ redirect: '/entities' })
   }
 }
 </script>

@@ -11,6 +11,7 @@ export interface Entity {
   email: string
   role: Role
   status: StatusEnum
+  licenses: License[]
 }
 
 export interface Project {

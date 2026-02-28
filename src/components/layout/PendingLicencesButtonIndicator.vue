@@ -1,6 +1,7 @@
 <template>
   <div class="relative">
     <UButton
+      to="/admin/licenses"
       size="xl"
       variant="soft"
       class="mr-2 cursor-pointer"
