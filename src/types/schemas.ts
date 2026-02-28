@@ -50,3 +50,10 @@ export interface SectorItem {
   label: string
   value: SectorEnum
 }
+
+export interface Metrics {
+  totalEntities: number
+  totalPending: number
+  totalApproved: number
+  totalRejected: number
+}

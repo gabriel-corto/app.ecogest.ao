@@ -1,5 +1,5 @@
 import type { ApiPageDataResponse, ApiResponse } from '@/types/api'
-import type { Entity, License } from '@/types/schemas'
+import type { Entity, License, Metrics } from '@/types/schemas'
 
 const PREFIX = '/admin'
 
@@ -125,4 +125,16 @@ export const rejectLicense = async (id: string, body: { reason: string }) => {
   )
 
   return response
+}
+
+export const getMetrics = async () => {
+  const api = useApiClient()
+  await new Promise(resolve => setTimeout(resolve, 1000))
+
+  const response = await api<ApiResponse<Metrics>>(`${PREFIX}/metrics`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+
+  return response.data
 }

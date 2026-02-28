@@ -5,36 +5,7 @@
     subtitle="Acompanhe os principais indicadores do sistema"
   >
     <template #metrics>
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <MetricCard
-          :value="12"
-          title="Total de Licenças Aprovadas"
-          description="Licenças Aprovadas"
-          icon="i-hugeicons-files-02"
-        />
-
-        <MetricCard
-          :value="12"
-          title="Licenças Em Análise"
-          description="Aguardam verificação"
-          icon="i-hugeicons-file-sync"
-        />
-
-        <MetricCard
-          :value="12"
-          title="Entidades cadastradas"
-          description="Entidades cadastradas"
-          icon="i-hugeicons-user-square"
-        />
-
-        <MetricCard
-          :value="12"
-          title="Fiscalização & Auditoria"
-          description="Processos de Fiscalização"
-          icon="i-hugeicons-fingerprint-scan"
-          color="#dc143c"
-        />
-      </div>
+      <MetricCards />
 
       <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-12">
         <UCard class="lg:col-span-4">
@@ -70,10 +41,10 @@
 </template>
 
 <script setup lang="ts">
-import MetricCard from '@/components/shared/cards/MetricCard.vue'
 import PageContainer from '@/components/shared/layout/PageContainer.vue'
 
 import type { ApexOptions } from 'apexcharts'
+import MetricCards from '~/components/pages/admin/MetricCards.vue'
 
 definePageMeta({
   layout: 'default',
