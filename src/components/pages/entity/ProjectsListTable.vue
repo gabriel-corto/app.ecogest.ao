@@ -42,7 +42,7 @@
     </TableFilterLine>
 
     <UTable
-      :data="response"
+      :data="response?.data"
       :columns="columns"
       :loading="status === 'pending'"
       empty="Nenhum Projecto Cadastrado"
@@ -64,15 +64,13 @@
 </template>
 
 <script setup lang="ts">
-import { UIcon } from '#components'
+import { UBadge, UButton, UIcon } from '#components'
 import type { DropdownMenuItem, TableColumn } from '@nuxt/ui'
 import TableContainer from '~/components/shared/layout/TableContainer.vue'
 import TableFilterLine from '~/components/shared/layout/TableFilterLine.vue'
 import { useCreateProjectModal } from '~/domain/projects'
 import { projectsService } from '~/services'
 import type { Project } from '~/types/schemas'
-
-const UBadge = resolveComponent('UBadge')
 
 const columns: TableColumn<Project>[] = [
   {
@@ -93,7 +91,7 @@ const columns: TableColumn<Project>[] = [
   },
 
   {
-    accessorKey: 'locale',
+    accessorKey: 'location',
     header: 'Localização',
     cell: ({ row }) =>
       h('div', { class: 'flex items-center gap-2' }, [
@@ -101,7 +99,7 @@ const columns: TableColumn<Project>[] = [
           name: 'i-hugeicons-location-01',
           size: '18',
         }),
-        h('span', row.original.locale),
+        h('span', row.original.location),
       ]),
   },
   {
@@ -111,9 +109,9 @@ const columns: TableColumn<Project>[] = [
       return h(UBadge, {
         class: 'capitalize w-28 flex rounded-md justify-center',
         variant: 'subtle',
-        color: 'primary',
+        color: sectorColors(row.original.sector).sectorColor.value,
         size: 'md',
-        label: useSectorEnum(row.original.sector),
+        label: useEnumTranslator().translate('sector', row.original.sector),
       })
     },
   },
@@ -136,7 +134,7 @@ const {
   refresh: refreshTable,
 } = await useLazyAsyncData(
   'get-projects',
-  () => projectsService.getProjects(),
+  () => projectsService.getAllByEntity(),
   {
     server: false,
   },

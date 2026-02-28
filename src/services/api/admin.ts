@@ -98,7 +98,7 @@ export const getLicenses = async (params?: QueryParams) => {
 
 export const approveLicense = async (id: string) => {
   const api = useApiClient()
-  await new Promise(resolve => setTimeout(resolve, 2000))
+  await new Promise(resolve => setTimeout(resolve, 5000))
 
   const response = await api<ApiResponse<License>>(
     `${PREFIX}/licenses/${id}/approve`,

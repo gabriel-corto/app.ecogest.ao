@@ -14,6 +14,7 @@
                   color="neutral"
                   size="lg"
                   icon="i-hugeicons-arrow-reload-horizontal"
+                  @click="refreshAll()"
                 />
 
                 <UInput

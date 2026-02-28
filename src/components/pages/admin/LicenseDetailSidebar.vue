@@ -190,7 +190,10 @@
                 </div>
 
                 <div class="flex items-center gap-x-2">
-                  <div>
+                  <ULink
+                    :to="license.licenseFileUrl"
+                    target="_blank"
+                  >
                     <div
                       class="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-200 bg-neutral-50"
                     >
@@ -199,11 +202,7 @@
                         class="h-6 w-6 text-neutral-400"
                       />
                     </div>
-
-                    <p class="text-sm font-medium text-neutral-800">
-                      {{ license?.licenseFileUrl }}
-                    </p>
-                  </div>
+                  </ULink>
                 </div>
               </div>
 
@@ -264,6 +263,7 @@
           color="success"
           class="text-sm font-medium"
           size="xl"
+          @click="onApproveProcess(license)"
         >
           Aprovar Pedido
         </UButton>
@@ -288,7 +288,10 @@
 <script setup lang="ts">
 import { licenseService } from '~/services'
 import SidebarSkeleton from '~/components/shared/SidebarSkeleton.vue'
-import { useRejectProcessModal } from '~/domain/projects'
+import {
+  useApproveLicenseModal,
+  useRejectProcessModal,
+} from '~/domain/projects'
 import type { License } from '~/types/schemas'
 
 interface Props {
@@ -315,14 +318,13 @@ defineExpose({
   refresh,
 })
 
-// const onActivateEntity = async () => {
-//   const updated = await adminService.activateEntity(props.entityId)
-
-//   if (updated) {
-//     refreshEntity()
-//     emit('updated')
-//   }
-// }
+const onApproveProcess = async (license: License) => {
+  const data = await useApproveLicenseModal(license)
+  if (data) {
+    refresh()
+    emit('updated')
+  }
+}
 
 const onRejectProcess = async (license: License) => {
   const data = await useRejectProcessModal(license)

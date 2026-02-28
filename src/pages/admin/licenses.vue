@@ -58,7 +58,10 @@ import TableFilterLine from '~/components/shared/layout/TableFilterLine.vue'
 
 import { UBadge, UButton, UIcon } from '#components'
 import LicenseDetailSidebar from '~/components/pages/admin/LicenseDetailSidebar.vue'
-import { useRejectProcessModal } from '~/domain/projects'
+import {
+  useApproveLicenseModal,
+  useRejectProcessModal,
+} from '~/domain/projects'
 
 const columns: TableColumn<License>[] = [
   {
@@ -102,7 +105,10 @@ const columns: TableColumn<License>[] = [
     header: 'Sector',
     cell: ({ row }) => {
       return h(UBadge, {
-        label: row.original.project.sector,
+        label: useEnumTranslator().translate(
+          'sector',
+          row.original.project.sector,
+        ),
         color: sectorColors(row.original.project.sector).sectorColor.value,
         variant: 'subtle',
       })
@@ -164,15 +170,21 @@ const columns: TableColumn<License>[] = [
             onClick: () => onSelectLicense(row.original.id),
           }),
           h(UButton, {
-            disabled: row.original.status === 'REJECTED',
+            disabled: row.original.status !== 'PENDING',
             variant: 'outline',
             label: 'Aprovar',
             color: 'success',
             size: 'sm',
             icon: 'i-hugeicons-arrow-up-right-01',
+            onClick: async () => {
+              const data = await useApproveLicenseModal(row.original)
+              if (data) {
+                refreshAll()
+              }
+            },
           }),
           h(UButton, {
-            disabled: row.original.status === 'REJECTED',
+            disabled: row.original.status !== 'PENDING',
             variant: 'outline',
             label: 'Rejeitar',
             color: 'error',
