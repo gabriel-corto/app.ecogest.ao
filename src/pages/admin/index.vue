@@ -8,33 +8,8 @@
       <MetricCards />
 
       <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-12">
-        <UCard class="lg:col-span-4">
-          <template #header>
-            <h3 class="font-bold">Gestão de Licenças</h3>
-          </template>
-
-          <client-only>
-            <apexchart
-              type="donut"
-              :options="pieOptions"
-              :series="pieSeries"
-            />
-          </client-only>
-        </UCard>
-
-        <UCard class="lg:col-span-8">
-          <template #header>
-            <h3 class="font-bold">Análise de Pedidos</h3>
-          </template>
-          <client-only>
-            <apexchart
-              type="line"
-              height="300"
-              :options="lineOptions"
-              :series="lineSeries"
-            />
-          </client-only>
-        </UCard>
+        <AdminDashboardGraphic />
+        <AdminDashboardLineGraphic />
       </div>
     </template>
   </PageContainer>
@@ -43,40 +18,11 @@
 <script setup lang="ts">
 import PageContainer from '@/components/shared/layout/PageContainer.vue'
 
-import type { ApexOptions } from 'apexcharts'
+import AdminDashboardGraphic from '~/components/pages/admin/AdminDashboardGraphic.vue'
+import AdminDashboardLineGraphic from '~/components/pages/admin/AdminDashboardLineGraphic.vue'
 import MetricCards from '~/components/pages/admin/MetricCards.vue'
 
 definePageMeta({
   layout: 'default',
 })
-
-const pieSeries = ref([20, 20, 25])
-const pieOptions: ApexOptions = {
-  labels: ['Aprovadas', 'Pendentes', 'Rejeitadas'],
-  colors: ['#10b981', '#eab308', '#ef4444'],
-  legend: {
-    position: 'bottom',
-    fontFamily: 'Inter',
-    itemMargin: { horizontal: 20 },
-  },
-  plotOptions: {
-    pie: { donut: { size: '60%' } },
-  },
-}
-
-const lineSeries = ref([
-  {
-    name: 'Licenças Emitidas',
-    data: [10, 21, 35, 50, 49, 60],
-  },
-])
-
-const lineOptions: ApexOptions = {
-  chart: { id: 'evolution-chart', toolbar: { show: false } },
-  xaxis: {
-    categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-  },
-  colors: ['#dc143c'],
-  stroke: { curve: 'smooth' },
-}
 </script>

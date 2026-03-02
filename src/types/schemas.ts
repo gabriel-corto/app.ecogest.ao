@@ -57,3 +57,11 @@ export interface Metrics {
   totalApproved: number
   totalRejected: number
 }
+
+export interface MetricsByYear {
+  total2023: number
+  total2024: number
+  total2025: number
+  total2026: number
+  total2027: number
+}

@@ -6,6 +6,7 @@ export type StatusEnum =
   | 'ACTIVE'
   | 'BLOCKED'
   | 'INACTIVE'
+  | 'EXPIRED'
 
 export type SectorEnum =
   | 'INDUSTRIAL'

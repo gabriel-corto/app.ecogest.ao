@@ -134,7 +134,7 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
     })
 
     useSuccessToast({
-      title: response.message,
+      title: 'Projecto criado com sucesso!',
     })
     emit('close', response.data)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

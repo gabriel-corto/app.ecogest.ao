@@ -23,6 +23,7 @@ const STATUS_COLOR_MAP: Record<StatusEnum, StatusColor> = {
   ACTIVE: 'success',
   BLOCKED: 'error',
   INACTIVE: 'error',
+  EXPIRED: 'error',
 }
 
 const SECTOR_COLOR_MAP: Record<SectorEnum, SectorColor> = {
