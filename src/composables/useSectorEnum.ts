@@ -4,7 +4,7 @@ export const useSectorEnum = (sector: SectorEnum) => {
   switch (sector) {
     case 'AGRICULTURE':
       return 'AGRICULTURA'
-    case 'BUILDING':
+    case 'INDUSTRIAL':
       return 'CONSTRUÇÃO'
     case 'EDUCATION':
       return 'EDUCAÇÃO'

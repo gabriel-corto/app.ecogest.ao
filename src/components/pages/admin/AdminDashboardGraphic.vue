@@ -45,16 +45,16 @@ const { data: response } = useLazyAsyncData(
 const pieSeries = computed(() => {
   if (response.value) {
     return [
-      Number(response.value.totalApproved),
-      Number(response.value.totalPending),
-      Number(response.value.totalRejected),
+      Number(response.value.totalRejected || 0),
+      Number(response.value.totalPending || 0),
+      Number(response.value.totalApproved || 0),
     ]
   }
 
   return [12, 12, 12]
 })
 const pieOptions: ApexOptions = {
-  labels: ['Aprovadas', 'Pendentes', 'Aprovadas'],
+  labels: ['Rejeitadas', 'Pendentes', 'Aprovadas'],
   colors: ['#dc143c', '#eab308', '#10b981'],
   legend: {
     position: 'bottom',
