@@ -4,7 +4,7 @@
       size="xl"
       variant="soft"
       class="mr-2 cursor-pointer"
-      icon="i-hugeicons-apartment"
+      icon="i-hugeicons-building-03"
       to="/entities/projects"
       label="Meus Projectos"
     />

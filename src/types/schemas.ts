@@ -65,3 +65,15 @@ export interface MetricsByYear {
   total2026: number
   total2027: number
 }
+
+export interface EntityDashboardSummary {
+  totalProjects: number
+  totalPendingProcesses: number
+  totalApprovedLicenses: number
+  totalRejectedLicenses: number
+}
+
+export interface EntityDashboardAnalysis {
+  month: string
+  total: number
+}

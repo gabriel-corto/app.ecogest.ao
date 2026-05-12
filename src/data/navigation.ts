@@ -20,7 +20,7 @@ export const navigationItems = ref<SidebarItems[]>([
     activeClass: 'bg-primary-50',
     context: ['COMPANY'],
     label: 'Meus Projectos',
-    icon: 'i-hugeicons-apartment',
+    icon: 'i-hugeicons-building-03',
     to: '/entities/projects',
   },
   {
