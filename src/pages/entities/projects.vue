@@ -85,7 +85,7 @@ const columns: TableColumn<Project>[] = [
         },
         [
           h(UIcon, {
-            name: 'i-hugeicons-apartment',
+            name: 'i-hugeicons-building-03',
             class: 'w-5 h-5',
           }),
           h('span', row.original.name),

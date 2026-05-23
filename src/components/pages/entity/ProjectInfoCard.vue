@@ -5,7 +5,7 @@
     >
       <div class="text-primary-100/50 absolute -top-4 -right-4">
         <UIcon
-          name="i-hugeicons-apartment"
+          name="i-hugeicons-building-03"
           class="h-24 w-24 rotate-12"
         />
       </div>
@@ -15,7 +15,7 @@
           class="bg-primary/10 text-primary flex h-12 w-12 items-center justify-center rounded-lg"
         >
           <UIcon
-            name="i-hugeicons-apartment"
+            name="i-hugeicons-building-03"
             class="h-6 w-6"
           />
         </div>

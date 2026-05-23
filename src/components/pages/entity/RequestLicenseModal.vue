@@ -85,7 +85,7 @@ const entityProject = ref<Project | undefined>()
 const onSubmit = async () => {
   loading.value = true
 
-  if (!state.file) {
+  if (!state.file || state.file === null) {
     useErrorToast({
       title: 'Documento não anexado!',
     })

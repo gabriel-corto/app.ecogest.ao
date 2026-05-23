@@ -154,7 +154,10 @@
                 </div>
 
                 <div class="flex items-center gap-x-2">
-                  <div>
+                  <ULink
+                    :to="process.licenseFileUrl"
+                    target="_blank"
+                  >
                     <div
                       class="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-200 bg-neutral-50"
                     >
@@ -163,7 +166,7 @@
                         class="h-6 w-6 text-neutral-400"
                       />
                     </div>
-                  </div>
+                  </ULink>
                 </div>
               </div>
 

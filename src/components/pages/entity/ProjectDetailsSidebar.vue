@@ -11,7 +11,7 @@
       >
         <div class="flex items-center gap-3">
           <UIcon
-            name="i-hugeicons-apartment"
+            name="i-hugeicons-building-03"
             class="text-primary-600 h-8 w-8"
           />
           <h2 class="font-semibold tracking-tight text-neutral-900">

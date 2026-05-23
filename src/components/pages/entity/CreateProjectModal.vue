@@ -30,7 +30,7 @@
               v-model="state.name"
               size="normal"
               class="w-full"
-              icon="i-hugeicons-apartment"
+              icon="i-hugeicons-building-03"
               placeholder="Ex: Construção de Edifício Comercial"
             />
           </UFormField>

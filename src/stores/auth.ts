@@ -30,21 +30,12 @@ export const useAuthStore = defineStore(
       }
     }
 
-    const createNewEntity = async (
-      data: CreateNewEntityBody,
-      //{ ...options }: LoginOptions,
-    ) => {
+    const createNewEntity = async (data: CreateNewEntityBody) => {
       await authService.createNewEntity(data)
       await login({
         email: data.email,
         password: data.password,
       })
-
-      // if (options) {
-      //   return navigateTo(options.to)
-      // }
-
-      //return navigateTo('/')
     }
 
     const signOut = async () => {
