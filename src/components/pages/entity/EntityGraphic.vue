@@ -2,16 +2,67 @@
 <template>
   <UCard>
     <template #header>
-      <h3 class="font-bold">Análise de Pedidos</h3>
+      <div class="flex items-center gap-2">
+        <div
+          class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-100"
+        >
+          <UIcon
+            name="i-hugeicons-chart-histogram"
+            class="h-4.5 w-4.5 text-emerald-600"
+          />
+        </div>
+        <h3 class="font-bold">Análise de Pedidos</h3>
+      </div>
     </template>
-    <client-only>
-      <apexchart
-        type="bar"
-        height="300"
-        :options="barOptions"
-        :series="barSeries"
-      />
-    </client-only>
+
+    <template v-if="isLoading">
+      <div
+        class="flex h-[300px] flex-col items-center justify-center space-y-4"
+      >
+        <div class="flex h-48 w-48 items-center justify-center">
+          <UIcon
+            name="i-hugeicons-loading-03"
+            class="h-12 w-12 animate-spin text-neutral-500"
+          />
+        </div>
+      </div>
+    </template>
+
+    <template v-else-if="hasData">
+      <client-only>
+        <apexchart
+          type="bar"
+          height="300"
+          :options="barOptions"
+          :series="barSeries"
+        />
+      </client-only>
+    </template>
+
+    <template v-else>
+      <div
+        class="flex h-[300px] flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-emerald-200 bg-emerald-50/30"
+      >
+        <div
+          class="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100/80"
+        >
+          <UIcon
+            name="i-hugeicons-chart-bar-line"
+            class="h-7 w-7 text-emerald-500"
+          />
+        </div>
+
+        <div class="space-y-1 text-center">
+          <h4 class="text-base font-semibold text-neutral-700">
+            Sem dados disponíveis
+          </h4>
+          <p class="max-w-xs text-sm text-neutral-400">
+            Os dados de análise de pedidos serão exibidos aqui assim que
+            existirem processos registados.
+          </p>
+        </div>
+      </div>
+    </template>
   </UCard>
 </template>
 
@@ -19,13 +70,20 @@
 import type { ApexOptions } from 'apexcharts'
 import { licenseService } from '~/services'
 
-const { data: response } = useLazyAsyncData(
+const { data: response, status } = useLazyAsyncData(
   'entity-analysis',
   () => licenseService.getDashboardAnalysis(),
   {
     server: false,
   },
 )
+
+const isLoading = computed(() => status.value === 'pending')
+
+const hasData = computed(() => {
+  if (!response.value || response.value.length === 0) return false
+  return response.value.some(item => item.total > 0)
+})
 
 const barSeries = computed(() => {
   if (!response.value) return []
