@@ -4,14 +4,14 @@
     <template #header>
       <div class="flex items-center gap-2">
         <div
-          class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-100"
+          class="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-100"
         >
           <UIcon
             name="i-hugeicons-chart-histogram"
-            class="h-4.5 w-4.5 text-emerald-600"
+            class="h-4.5 w-4.5 text-neutral-600"
           />
         </div>
-        <h3 class="font-bold">Análise de Pedidos</h3>
+        <h3 class="font-bold">Análise de Licenças Emitidas</h3>
       </div>
     </template>
 
@@ -41,14 +41,14 @@
 
     <template v-else>
       <div
-        class="flex h-[300px] flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-emerald-200 bg-emerald-50/30"
+        class="flex h-[300px] flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-neutral-200 bg-neutral-50/30"
       >
         <div
-          class="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100/80"
+          class="flex h-14 w-14 items-center justify-center rounded-2xl bg-neutral-100/80"
         >
           <UIcon
             name="i-hugeicons-chart-bar-line"
-            class="h-7 w-7 text-emerald-500"
+            class="h-7 w-7 text-neutral-500"
           />
         </div>
 

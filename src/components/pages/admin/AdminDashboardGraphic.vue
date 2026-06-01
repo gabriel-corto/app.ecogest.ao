@@ -15,7 +15,20 @@
       </client-only>
     </template>
 
-    <template v-else>
+    <template v-else-if="status === 'pending'">
+      <div
+        class="flex h-[300px] flex-col items-center justify-center space-y-4"
+      >
+        <div class="flex h-48 w-48 items-center justify-center">
+          <UIcon
+            name="i-hugeicons-loading-03"
+            class="h-12 w-12 animate-spin text-neutral-500"
+          />
+        </div>
+      </div>
+    </template>
+
+    <template v-else-if="isEmpty">
       <div
         class="flex h-[300px] flex-col items-center justify-center space-y-4"
       >
@@ -34,7 +47,7 @@
 import type { ApexOptions } from 'apexcharts'
 import { adminService } from '~/services'
 
-const { data: response } = useLazyAsyncData(
+const { data: response, status } = useLazyAsyncData(
   'all-admin-metrics',
   () => adminService.getMetrics(),
   {
@@ -53,6 +66,15 @@ const pieSeries = computed(() => {
 
   return [12, 12, 12]
 })
+
+const isEmpty = computed(
+  () =>
+    response.value?.totalApproved === 0 &&
+    response.value.totalEntities === 0 &&
+    response.value.totalPending === 0 &&
+    response.value.totalRejected === 0,
+)
+
 const pieOptions: ApexOptions = {
   labels: ['Rejeitadas', 'Pendentes', 'Aprovadas'],
   colors: ['#dc143c', '#eab308', '#10b981'],

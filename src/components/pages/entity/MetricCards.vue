@@ -15,7 +15,7 @@
         description="Aguardando Governo"
         icon="i-hugeicons-file-sync"
         color="#f59e0b"
-        @click="navigateTo('/entities/licenses')"
+        @click="navigateTo('/entities/processes')"
       />
 
       <MetricCard
@@ -24,7 +24,7 @@
         description="Prontas para download"
         icon="i-hugeicons-file-sync"
         color="#10b981"
-        @click="navigateTo('/entities/licenses')"
+        @click="navigateTo('/entities/processes')"
       />
 
       <MetricCard
@@ -33,7 +33,7 @@
         description="Solicitações rejeitadas"
         icon="i-hugeicons-fingerprint-scan"
         color="#dc143c"
-        @click="navigateTo('/entities/licenses')"
+        @click="navigateTo('/entities/processes')"
       />
     </template>
 
